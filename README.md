@@ -17,3 +17,8 @@ Generates screenshots after each test case to support debugging, traceability, a
 Optimized and Maintainable Codebase
 Structured using best practices to ensure readability, scalability, and efficient test execution.
 
+Special feature added to code
+Screenshot
+Video
+Trace
+added to test report
