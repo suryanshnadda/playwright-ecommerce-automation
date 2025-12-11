@@ -12,7 +12,7 @@ test("Login test", async ({ page }) => {
 });
 
 // full checkout process
-test.skip("Add product to cart", async ({ page }) => {
+test("Add product to cart", async ({ page }) => {
     await login(page);  // Reusing login fixture
    // await page.pause();
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
@@ -27,8 +27,7 @@ test.skip("Add product to cart", async ({ page }) => {
   await page.locator('[data-test="continue"]').click();
   await page.locator('[data-test="finish"]').click();
   await expect(page.getByText("Thank you for your order!")).toBeVisible();
-  await expect(page).toHaveURL('https://www.saucedemo.com/checkout-complete.html');
-   
+  await expect(page).toHaveURL('https://www.saucedemo.com/checkout-complete.html'); 
 });
 
 test("check cart updation after adding multiple products", async ({ page }) => {
@@ -37,9 +36,17 @@ test("check cart updation after adding multiple products", async ({ page }) => {
     await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
     // await page.pause();
 await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('2');
-
 });
 
+
+test("check cart updation after deleting multiple products", async ({ page }) => {
+    await login(page);  // Reusing login fixture
+    await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
+    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+    await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
+    // await page.pause();
+    await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
+});
 
 
 test("check the final price on checkout overview page", async ({ page }) => {
@@ -58,14 +65,21 @@ test("check the final price on checkout overview page", async ({ page }) => {
   await page.locator('[data-test="postalCode"]').click();
   await page.locator('[data-test="postalCode"]').fill('174028');
   await page.locator('[data-test="continue"]').click();
-
-  //checking if  value of price on checkout overview page is same as the price of product added to cart
+//checking if  value of price on checkout overview page is same as the price of product added to cart
 // 2. Build the expected label text
 const expectedLabel = `Item total: $${price.toFixed(2)}`;
-
 // 3. Assert UI text equals the expected label
 await expect(page.locator('[data-test="subtotal-label"]')).toHaveText(expectedLabel);
-
 });
 
+
+test("checking logout functionality", async ({ page }) => {
+    await login(page);  // Reusing login fixture
+    // await page.pause();
+     await page.getByRole('button', { name: 'Open Menu' }).click();
+     await page.locator('[data-test="logout-sidebar-link"]').click();
+     await expect(page).toHaveURL('https://www.saucedemo.com/');
+}); 
+
   
+
