@@ -11,6 +11,19 @@ test("Login test", async ({ page }) => {
     await login(page);
 });
 
+
+test("login failure", async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
+  await page.locator('[data-test="username"]').click();
+  await page.locator('[data-test="username"]').fill('standard_userbot');
+  await page.locator('[data-test="password"]').click();
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+  await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
+});
+
+
+
 // full checkout process
 test("Add product to cart", async ({ page }) => {
     await login(page);  // Reusing login fixture
