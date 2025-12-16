@@ -11,7 +11,6 @@ test("Login test", async ({ page }) => {
     await login(page);
 });
 
-
 test("login failure", async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
   await page.locator('[data-test="username"]').click();
@@ -21,8 +20,6 @@ test("login failure", async ({ page }) => {
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
-
-
 
 // full checkout process
 test("Add product to cart", async ({ page }) => {
@@ -51,7 +48,6 @@ test("check cart updation after adding multiple products", async ({ page }) => {
 await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('2');
 });
 
-
 test("check cart updation after deleting multiple products", async ({ page }) => {
     await login(page);  // Reusing login fixture
     await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
@@ -60,7 +56,6 @@ test("check cart updation after deleting multiple products", async ({ page }) =>
     // await page.pause();
     await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
 });
-
 
 test("check the final price on checkout overview page", async ({ page }) => {
     await login(page);  // Reusing login fixture
@@ -84,7 +79,6 @@ const expectedLabel = `Item total: $${price.toFixed(2)}`;
 // 3. Assert UI text equals the expected label
 await expect(page.locator('[data-test="subtotal-label"]')).toHaveText(expectedLabel);
 });
-
 
 test("checking logout functionality", async ({ page }) => {
     await login(page);  // Reusing login fixture
